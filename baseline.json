@@ -1,0 +1,106 @@
+{
+ "atualizado_em": "2026-10-12T22:16:34-03:00",
+ "score": 0.0579,
+ "parametros": {
+  "desde": "2023-01",
+  "janela_ipf": 12,
+  "limite_anomalia": 0.02,
+  "minimo_postos": 3,
+  "atrasos": [
+   1,
+   2
+  ],
+  "pesos": {
+   "dispersao": 0.35,
+   "fiscalizacao": 0.25,
+   "interdicao": 0.2,
+   "variacao": 0.2
+  },
+  "metodo": "pearson"
+ },
+ "ciclos": [
+  {
+   "ciclo": 1,
+   "hipotese": "janela de correlação",
+   "descricao": "começar a correlação em 2024-01",
+   "mudanca": {
+    "desde": "2024-01"
+   },
+   "score_antes": 0.0579,
+   "score_depois": 0.0497,
+   "decisao": "REJEITADO",
+   "observacao": "9 correlações, 2 com p < 0.05; piora de 14.2% sobre o melhor até agora"
+  },
+  {
+   "ciclo": 2,
+   "hipotese": "janela do IPF",
+   "descricao": "contar ações dos últimos 24 meses",
+   "mudanca": {
+    "janela_ipf": 24
+   },
+   "score_antes": 0.0579,
+   "score_depois": 0.0593,
+   "decisao": "REJEITADO",
+   "observacao": "9 correlações, 4 com p < 0.05; melhora de 2.4%, abaixo dos 5% exigidos"
+  },
+  {
+   "ciclo": 3,
+   "hipotese": "limiar de anomalia",
+   "descricao": "mínimo colado passa a ser folga < 1.0%",
+   "mudanca": {
+    "limite_anomalia": 0.01
+   },
+   "score_antes": 0.0579,
+   "score_depois": 0.0579,
+   "decisao": "SEM EFEITO NA MÉTRICA",
+   "observacao": "9 correlações, 4 com p < 0.05; o score de evidência mede correlação, e este parâmetro só muda a lista de alvos e anomalias publicada — não conta como rejeição"
+  },
+  {
+   "ciclo": 4,
+   "hipotese": "porte mínimo do município",
+   "descricao": "exigir 5 postos por município",
+   "mudanca": {
+    "minimo_postos": 5
+   },
+   "score_antes": 0.0579,
+   "score_depois": 0.0579,
+   "decisao": "SEM EFEITO NA MÉTRICA",
+   "observacao": "9 correlações, 4 com p < 0.05; o score de evidência mede correlação, e este parâmetro só muda a lista de alvos e anomalias publicada — não conta como rejeição"
+  },
+  {
+   "ciclo": 5,
+   "hipotese": "memória da fiscalização",
+   "descricao": "lags (1, 2, 3) entre ação e preço",
+   "mudanca": {
+    "atrasos": [
+     1,
+     2,
+     3
+    ]
+   },
+   "score_antes": 0.0579,
+   "score_depois": 0.0604,
+   "decisao": "REJEITADO",
+   "observacao": "10 correlações, 5 com p < 0.05; melhora de 4.3%, abaixo dos 5% exigidos"
+  },
+  {
+   "ciclo": 6,
+   "hipotese": "método da correlação",
+   "descricao": "usar Spearman na evidência principal",
+   "mudanca": {
+    "metodo": "spearman"
+   },
+   "score_antes": 0.0579,
+   "score_depois": 0.0563,
+   "decisao": "REJEITADO",
+   "observacao": "9 correlações, 4 com p < 0.05; piora de 2.8% sobre o melhor até agora"
+  }
+ ],
+ "rejeicoes_por_hipotese": {
+  "janela de correlação": 1,
+  "janela do IPF": 1,
+  "memória da fiscalização": 1,
+  "método da correlação": 1
+ },
+ "parada": "score estabilizado (duas variações abaixo de 5%) com evidência suficiente"
+}

@@ -1,0 +1,25 @@
+# Fim de linha explícito. O git desta máquina tem core.autocrlf=true, que sozinho
+# converteria tudo para CRLF em todo checkout novo. As regras abaixo mandam mais.
+
+# Código, site e dados textuais: sempre LF na cópia de trabalho.
+*.py   text eol=lf
+*.js   text eol=lf
+*.css  text eol=lf
+*.html text eol=lf
+*.md   text eol=lf
+*.json text eol=lf
+*.csv  text eol=lf
+*.ps1  text eol=lf
+*.sh   text eol=lf
+
+# Demais textos: normaliza LF no repositório e deixa o padrão do sistema na cópia.
+* text=auto
+
+# --- O que NÃO deve entrar no pacote distribuído (git archive / publicação do site) ---
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/.githooks export-ignore
+/.github export-ignore
+/tests export-ignore
+/notebooks export-ignore
+/scripts export-ignore

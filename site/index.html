@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Combustíveis BR — preços por estado</title>
+<meta name="description" content="Preços médios de combustíveis por estado a partir de dados públicos da ANP: ranking, destaques e manchetes sobre repasse de preços.">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235cc98b' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M5 20V6a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v14'/%3E%3Cpath d='M3.5 20h12'/%3E%3Cpath d='M7.5 8h4v4h-4z'/%3E%3Cpath d='M14 10h2.5A1.5 1.5 0 0 1 18 11.5V16a1.5 1.5 0 0 0 3 0v-5l-2-4'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+<a class="pular" href="#conteudo">Ir para o conteúdo</a>
+
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+	<symbol id="ico-bomba" viewBox="0 0 24 24">
+		<path d="M5 20V6a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v14"/>
+		<path d="M3.5 20h12"/>
+		<path d="M7.5 8h4v4h-4z"/>
+		<path d="M14 10h2.5A1.5 1.5 0 0 1 18 11.5V16a1.5 1.5 0 0 0 3 0v-5l-2-4"/>
+	</symbol>
+	<symbol id="ico-trofeu" viewBox="0 0 24 24">
+		<path d="M7.5 4h9v4.5a4.5 4.5 0 0 1-9 0V4Z"/>
+		<path d="M7.5 5.5H5A2.5 2.5 0 0 0 7.5 10"/>
+		<path d="M16.5 5.5H19A2.5 2.5 0 0 1 16.5 10"/>
+		<path d="M12 13v3.5"/>
+		<path d="M9 20h6l-1-3.5h-4L9 20Z"/>
+	</symbol>
+	<symbol id="ico-joinha-baixo" viewBox="0 0 24 24">
+		<path d="M7 3.5h7a2 2 0 0 1 1.9 1.4l1.5 4.6a2 2 0 0 1-1.9 2.7h-2.6l.7 3.9a2.2 2.2 0 0 1-4.3 1L7 12.5"/>
+		<path d="M7 3.5H4.5v9H7v-9Z"/>
+	</symbol>
+	<symbol id="ico-medalha" viewBox="0 0 24 24">
+		<circle cx="12" cy="14.5" r="5.5"/>
+		<path d="M8.8 3.5 11 9.6M15.2 3.5 13 9.6"/>
+	</symbol>
+	<symbol id="ico-moeda" viewBox="0 0 24 24">
+		<circle cx="12" cy="12" r="8.5"/>
+		<path d="M12 6.5v11"/>
+		<path d="M14.6 9.2A2.6 2.6 0 0 0 12 7.8c-1.5 0-2.6.8-2.6 1.9 0 1.2 1 1.7 2.7 2 1.9.3 2.9 1 2.9 2.2 0 1.3-1.2 2.2-3 2.2a3.4 3.4 0 0 1-2.9-1.3"/>
+	</symbol>
+	<symbol id="ico-seta-cima" viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></symbol>
+	<symbol id="ico-seta-baixo" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="m6 13 6 6 6-6"/></symbol>
+	<symbol id="ico-barras" viewBox="0 0 24 24"><path d="M4 20v-7M9.3 20V5M14.7 20v-9M20 20V9"/><path d="M3 20h18"/></symbol>
+	<symbol id="ico-jornal" viewBox="0 0 24 24">
+		<rect x="3.5" y="5" width="13.5" height="14" rx="2"/>
+		<path d="M17 8.5h2.5A1.5 1.5 0 0 1 21 10v7.5a1.5 1.5 0 0 1-1.5 1.5H17"/>
+		<path d="M7 9h6.5M7 12.2h6.5M7 15.4h4"/>
+	</symbol>
+	<symbol id="ico-calendario" viewBox="0 0 24 24">
+		<rect x="3.5" y="5.5" width="17" height="15" rx="2"/>
+		<path d="M3.5 10.5h17"/><path d="M8 3.5v4M16 3.5v4"/>
+	</symbol>
+	<symbol id="ico-mapa" viewBox="0 0 24 24">
+		<path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/>
+		<circle cx="12" cy="10" r="2.6"/>
+	</symbol>
+	<symbol id="ico-mundo" viewBox="0 0 24 24">
+		<circle cx="12" cy="12" r="8.5"/>
+		<path d="M3.5 12h17"/>
+		<path d="M12 3.5c2.4 2.6 3.7 5.4 3.7 8.5S14.4 18.4 12 20.5C9.6 18.4 8.3 15.1 8.3 12S9.6 6.1 12 3.5Z"/>
+	</symbol>
+	<symbol id="ico-documento" viewBox="0 0 24 24">
+		<path d="M7 3.5h7l4 4V19a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 19V5a1.5 1.5 0 0 1 1-1.5Z"/>
+		<path d="M13.8 3.5V8H18"/><path d="M9 12.5h6M9 16h4"/>
+	</symbol>
+	<symbol id="ico-alerta" viewBox="0 0 24 24">
+		<path d="M12 4.2 20.8 19.8H3.2L12 4.2Z"/>
+		<path d="M12 10v4.4"/>
+		<circle cx="12" cy="17.4" r=".9" fill="currentColor" stroke="none"/>
+	</symbol>
+	<symbol id="ico-info" viewBox="0 0 24 24">
+		<circle cx="12" cy="12" r="8.5"/>
+		<path d="M12 11.2v5.6"/>
+		<circle cx="12" cy="7.9" r=".9" fill="currentColor" stroke="none"/>
+	</symbol>
+	<symbol id="ico-link" viewBox="0 0 24 24">
+		<path d="M14 4h6v6"/><path d="M20 4l-8.6 8.6"/>
+		<path d="M18 14.5V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.5"/>
+	</symbol>
+	<symbol id="ico-limpar" viewBox="0 0 24 24"><path d="M6 6 18 18M18 6 6 18"/></symbol>
+	<symbol id="ico-lupa" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.6-4.6"/></symbol>
+	<symbol id="ico-lista" viewBox="0 0 24 24">
+		<path d="M8 6.5h12M8 12h12M8 17.5h12"/>
+		<circle cx="4.3" cy="6.5" r="1.1" fill="currentColor" stroke="none"/>
+		<circle cx="4.3" cy="12" r="1.1" fill="currentColor" stroke="none"/>
+		<circle cx="4.3" cy="17.5" r="1.1" fill="currentColor" stroke="none"/>
+	</symbol>
+	<symbol id="ico-escudo" viewBox="0 0 24 24">
+		<path d="M12 3.3 19 6.1v6.1c0 4.1-2.7 7.4-7 8.5-4.3-1.1-7-4.4-7-8.5V6.1L12 3.3Z"/>
+		<path d="m9.3 12.1 2 2 3.5-3.8"/>
+	</symbol>
+	<symbol id="ico-mira" viewBox="0 0 24 24">
+		<circle cx="12" cy="12" r="7.6"/>
+		<circle cx="12" cy="12" r="3.1"/>
+		<path d="M12 2.6v3.3M12 18.1v3.3M2.6 12h3.3M18.1 12h3.3"/>
+	</symbol>
+	<symbol id="ico-grafico" viewBox="0 0 24 24">
+		<path d="M4 4.2v15.6h16"/>
+		<path d="m6.8 15.6 3.9-4.4 2.9 2.4 4.1-6"/>
+	</symbol>
+</svg>
+
+<header class="topo">
+	<div class="topo__interno">
+		<p class="marca">
+			<svg class="icone icone--forte" aria-hidden="true"><use href="#ico-bomba"></use></svg>
+			<span>Combustíveis <strong>BR</strong></span>
+		</p>
+		<p class="topo__meta" id="procedencia">Carregando os dados…</p>
+	</div>
+</header>
+
+<main id="conteudo" class="pagina">
+	<div class="abas" role="tablist" aria-label="Seções do painel">
+		<button type="button" class="aba" id="aba-precos" role="tab" aria-selected="true" aria-controls="painel-precos" tabindex="0">
+			<svg class="icone" aria-hidden="true"><use href="#ico-bomba"></use></svg>
+			<span>Preços</span>
+		</button>
+		<button type="button" class="aba" id="aba-inteligencia" role="tab" aria-selected="false" aria-controls="painel-inteligencia" tabindex="-1">
+			<svg class="icone" aria-hidden="true"><use href="#ico-escudo"></use></svg>
+			<span>Inteligência</span>
+		</button>
+	</div>
+
+	<div class="aba__painel" id="painel-precos" role="tabpanel" aria-labelledby="aba-precos" tabindex="0">
+		<section class="painel vidro" aria-labelledby="titulo-filtros">
+			<h2 class="titulo-secao" id="titulo-filtros">
+				<svg class="icone" aria-hidden="true"><use href="#ico-lista"></use></svg>
+				Recorte
+			</h2>
+			<div class="campos">
+				<div class="campo">
+					<label for="filtro-produto">Produto</label>
+					<select id="filtro-produto"></select>
+				</div>
+				<div class="campo">
+					<label for="filtro-periodo">Mês</label>
+					<select id="filtro-periodo"></select>
+				</div>
+				<div class="campo">
+					<label for="filtro-estado">Estado</label>
+					<select id="filtro-estado"></select>
+				</div>
+				<div class="campo campo--acao">
+					<button type="button" class="botao botao--forte" id="pesquisar">
+						<svg class="icone" aria-hidden="true"><use href="#ico-lupa"></use></svg>
+						Pesquisar
+					</button>
+				</div>
+				<div class="campo campo--acao">
+					<button type="button" class="botao" id="limpar">
+						<svg class="icone" aria-hidden="true"><use href="#ico-limpar"></use></svg>
+						Limpar filtros
+					</button>
+				</div>
+			</div>
+			<p class="anuncio" id="anuncio" role="status" aria-live="polite"></p>
+		</section>
+
+		<section class="kpis" id="kpis" aria-label="Resumo do recorte"></section>
+
+		<section aria-labelledby="titulo-destaques">
+			<h2 class="titulo-secao" id="titulo-destaques">
+				<svg class="icone" aria-hidden="true"><use href="#ico-trofeu"></use></svg>
+				Destaques do bolso
+			</h2>
+			<p class="legenda">Sempre até três preços médios mais baixos (troféu) e até três mais altos (joinha para baixo) do recorte escolhido: estados quando o recorte é o país, cidades quando há um estado escolhido. Recorte com poucos lugares mostra menos, para o mesmo lugar não aparecer nos dois lados.</p>
+			<div class="destaques" id="destaques"></div>
+		</section>
+
+		<section class="painel vidro" aria-labelledby="titulo-ranking">
+			<h2 class="titulo-secao" id="titulo-ranking">
+				<svg class="icone" aria-hidden="true"><use href="#ico-barras"></use></svg>
+				<span id="ranking-titulo">Ranking por estado</span>
+			</h2>
+			<p class="legenda" id="ranking-legenda">Média ponderada pelo número de postos. A barra mostra o preço em relação ao estado mais caro do recorte; a variação é comparada com a média nacional.</p>
+			<ol class="ranking" id="ranking"></ol>
+		</section>
+
+		<section class="painel vidro" aria-labelledby="titulo-tabela">
+			<h2 class="titulo-secao" id="titulo-tabela">
+				<svg class="icone" aria-hidden="true"><use href="#ico-documento"></use></svg>
+				Detalhe por produto, estado e mês
+			</h2>
+			<p class="legenda" id="tabela-legenda">Aberto do mais barato ao mais caro: fundo <strong>verde</strong> para as médias mais baixas do recorte e <strong>vermelho</strong> para as mais altas. Clique no título de uma coluna para reordenar.</p>
+			<div class="tabela-rolagem">
+				<table class="tabela" id="tabela">
+					<caption class="oculto">Preço mínimo, médio e máximo por produto, estado e mês, com o número de municípios e de postos pesquisados.</caption>
+					<thead>
+						<tr>
+							<th scope="col" data-campo="produto"><button type="button">Produto</button></th>
+							<th scope="col" data-campo="estado"><button type="button">Estado</button></th>
+							<th scope="col" data-campo="periodo"><button type="button">Mês</button></th>
+							<th scope="col" data-campo="municipios" class="numero"><button type="button">Municípios</button></th>
+							<th scope="col" data-campo="postos_pesquisados" class="numero"><button type="button">Postos</button></th>
+							<th scope="col" data-campo="preco_minimo" class="numero"><button type="button">Mínimo</button></th>
+							<th scope="col" data-campo="preco_medio" class="numero"><button type="button">Médio</button></th>
+							<th scope="col" data-campo="preco_maximo" class="numero"><button type="button">Máximo</button></th>
+						</tr>
+					</thead>
+					<tbody id="corpo-tabela"></tbody>
+				</table>
+			</div>
+		</section>
+
+		<section aria-labelledby="titulo-noticias">
+			<h2 class="titulo-secao" id="titulo-noticias">
+				<svg class="icone" aria-hidden="true"><use href="#ico-jornal"></use></svg>
+				O que estão dizendo sobre o preço
+			</h2>
+			<p class="legenda">
+				Manchetes de fontes públicas (feeds RSS), com selo verde para o que alivia o bolso e vermelho para o que pesa —
+				incluindo desconto que <em>não</em> chegou à bomba. A leitura do tom é automática, por palavra-chave: confira no link original.
+			</p>
+			<div class="noticias__grupos" id="noticias"></div>
+		</section>
+		</div>
+
+	<div class="aba__painel" id="painel-inteligencia" role="tabpanel" aria-labelledby="aba-inteligencia" tabindex="0" hidden>
+		<p class="legenda" id="inteligencia-procedencia">Carregando a análise de fiscalização…</p>
+		<div id="inteligencia-aviso"></div>
+
+		<div class="inteligencia" id="inteligencia-corpo" hidden>
+			<section class="painel vidro" aria-labelledby="titulo-int-contexto">
+				<h2 class="titulo-secao" id="titulo-int-contexto">
+					<svg class="icone" aria-hidden="true"><use href="#ico-info"></use></svg>
+					O que foi medido
+				</h2>
+				<p class="legenda">Período coberto, tamanho da base e o score de evidência que resume os cruzamentos entre fiscalização e preço.</p>
+				<div class="faixa" id="int-contexto"></div>
+				<p class="legenda" id="int-contexto-nota"></p>
+			</section>
+
+			<section class="painel vidro" aria-labelledby="titulo-int-interdicao">
+				<h2 class="titulo-secao" id="titulo-int-interdicao">
+					<svg class="icone" aria-hidden="true"><use href="#ico-escudo"></use></svg>
+					Interdição × preço
+				</h2>
+				<p class="legenda">
+					O preço do município muda depois de um auto de interdição? O teste é de <strong>diferença em
+					diferenças</strong>: o mesmo cálculo é feito nos demais municípios da mesma UF, nos mesmos meses, e o
+					efeito é o excesso do município interditado sobre esse controle.
+					<strong>Este resultado não mostra efeito da interdição sobre o preço.</strong>
+				</p>
+				<div id="int-interdicao"></div>
+			</section>
+
+			<section class="painel vidro" aria-labelledby="titulo-int-correlacoes">
+				<h2 class="titulo-secao" id="titulo-int-correlacoes">
+					<svg class="icone" aria-hidden="true"><use href="#ico-grafico"></use></svg>
+					Correlações medidas
+				</h2>
+				<p class="legenda">
+					Cada linha cruza fiscalização e preço; a coluna <strong>leitura</strong> repete a frase que o próprio
+					artefato escreveu. <strong>Associação não é causa</strong>: as duas coisas podem andar juntas por um
+					terceiro fator (tamanho do mercado, logística, renda) — e fiscalização acha o que procura.
+					<strong>Estabilidade</strong> perto de 1,00 quer dizer que o sinal se repete quando a série (ou a
+					amostra) é cortada ao meio; 0,00 quer dizer que não se repete.
+				</p>
+				<div class="tabela-rolagem">
+					<table class="tabela" id="tabela-correlacoes">
+						<caption class="oculto">Correlações entre fiscalização e preço: medida, método, coeficiente r, p-valor, tamanho da amostra, estabilidade e leitura em português.</caption>
+						<thead>
+							<tr>
+								<th scope="col">Medida</th>
+								<th scope="col">Método</th>
+								<th scope="col" class="numero">r</th>
+								<th scope="col" class="numero">p</th>
+								<th scope="col" class="numero">n</th>
+								<th scope="col" class="numero">Estabilidade</th>
+								<th scope="col">Leitura</th>
+							</tr>
+						</thead>
+						<tbody id="correlacoes-corpo"></tbody>
+					</table>
+				</div>
+				<p class="legenda" id="int-correlacoes-nota"></p>
+			</section>
+
+			<section class="painel vidro" aria-labelledby="titulo-int-ipf">
+				<h2 class="titulo-secao" id="titulo-int-ipf">
+					<svg class="icone" aria-hidden="true"><use href="#ico-mapa"></use></svg>
+					IPF por estado
+				</h2>
+				<p class="legenda" id="int-ipf-legenda"></p>
+				<div class="tabela-rolagem">
+					<table class="tabela" id="tabela-ipf">
+						<caption class="oculto">Índice de presença de fiscalização por estado: postos ativos, ações, interdições, IPF, IPF acumulado, dispersão de preço e preço médio.</caption>
+						<thead id="ipf-cabecalho"></thead>
+						<tbody id="ipf-corpo"></tbody>
+					</table>
+				</div>
+				<p class="legenda">O IPF acumulado vai de 1998 até hoje e divide o estoque antigo pelo número de postos de hoje: estados com histórico longo de fiscalização aparecem maiores do que apareceriam numa janela curta.</p>
+			</section>
+
+			<section class="painel vidro" aria-labelledby="titulo-int-anomalias">
+				<h2 class="titulo-secao" id="titulo-int-anomalias">
+					<svg class="icone" aria-hidden="true"><use href="#ico-alerta"></use></svg>
+					Preço mínimo colado na média
+				</h2>
+				<p class="legenda">Municípios em que o preço mínimo fica praticamente encostado na média do mês, mês após mês. É <strong>padrão a verificar</strong> — um indício de mercado que não briga por preço, <strong>não prova de conluio</strong>.</p>
+				<div class="tabela-rolagem">
+					<table class="tabela" id="tabela-anomalias">
+						<caption class="oculto">Municípios com preço mínimo colado na média: recorrência em meses, folga média, postos, preços e último mês observado.</caption>
+						<thead>
+							<tr>
+								<th scope="col">Estado</th>
+								<th scope="col">Município</th>
+								<th scope="col">Meses colados</th>
+								<th scope="col" class="numero">Folga média</th>
+								<th scope="col" class="numero">Postos/mês</th>
+								<th scope="col" class="numero">Mínimo</th>
+								<th scope="col" class="numero">Médio</th>
+								<th scope="col" class="numero">Máximo</th>
+								<th scope="col" class="numero">Amplitude</th>
+								<th scope="col">Último mês</th>
+							</tr>
+						</thead>
+						<tbody id="anomalias-corpo"></tbody>
+					</table>
+				</div>
+				<p class="legenda" id="int-anomalias-nota"></p>
+			</section>
+
+			<section aria-labelledby="titulo-int-alvos">
+				<h2 class="titulo-secao" id="titulo-int-alvos">
+					<svg class="icone" aria-hidden="true"><use href="#ico-mira"></use></svg>
+					Alvos de fiscalização
+				</h2>
+				<p class="legenda" id="int-alvos-legenda"></p>
+				<div class="alvos" id="alvos-lista"></div>
+			</section>
+
+			<section class="painel vidro" aria-labelledby="titulo-int-interditos">
+				<h2 class="titulo-secao" id="titulo-int-interditos">
+					<svg class="icone" aria-hidden="true"><use href="#ico-documento"></use></svg>
+					Interdições registradas
+				</h2>
+				<p class="legenda">Até 20 CNPJs com a interdição mais recente no artefato, do mais recente para o mais antigo. Auto de interdição é ato administrativo e o dado é preliminar: o autuado tem direito ao contraditório e à ampla defesa, e só o julgamento definitivo comprova a infração.</p>
+				<div class="tabela-rolagem">
+					<table class="tabela" id="tabela-interditos">
+						<caption class="oculto">Revendas com auto de interdição: estado, município, CNPJ, número de interdições e datas da primeira e da última.</caption>
+						<thead>
+							<tr>
+								<th scope="col">Estado</th>
+								<th scope="col">Município</th>
+								<th scope="col">CNPJ</th>
+								<th scope="col" class="numero">Interdições</th>
+								<th scope="col">Primeira</th>
+								<th scope="col">Última</th>
+							</tr>
+						</thead>
+						<tbody id="interditos-corpo"></tbody>
+					</table>
+				</div>
+			</section>
+
+			<section class="painel vidro" aria-labelledby="titulo-int-limitacoes">
+				<h2 class="titulo-secao" id="titulo-int-limitacoes">
+					<svg class="icone" aria-hidden="true"><use href="#ico-info"></use></svg>
+					Limitações
+				</h2>
+				<p class="legenda">O que este artefato <strong>não</strong> pode dizer. Está no próprio arquivo publicado e vale para tudo o que aparece acima.</p>
+				<ul class="limites" id="int-limitacoes"></ul>
+			</section>
+		</div>
+	</div>
+</main>
+
+<footer class="rodape">
+	<p>
+		Preço médio <strong>ponderado pelo número de postos</strong>, com cada revenda contando uma vez por mês.
+		Bruto guardado sem edição; o site lê um único arquivo (<code>data/dados.json</code>) e funciona offline.
+	</p>
+	<p class="rodape__creditos">
+		Fonte dos preços: <a id="link-fonte" href="https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-abertos/serie-historica-de-precos-de-combustiveis" rel="noopener noreferrer">ANP — Levantamento de Preços de Combustíveis</a>.
+		Manchetes e marcas pertencem aos veículos que as publicaram.
+		Os preços são informados pelas revendas e podem ser retificados pela ANP; o tratamento, os
+		resumos e os indicadores são deste projeto.
+		<span id="rodape-gerado"></span>
+	</p>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

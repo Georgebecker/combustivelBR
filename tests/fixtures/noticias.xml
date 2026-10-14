@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>"preco combustiveis" - Google Notícias</title>
+    <item>
+      <title>Governo zera tributos sobre a gasolina e publica MP de R$ 7,5 bilhões - Agência Brasil</title>
+      <link>https://exemplo.test/nacional/tributos</link>
+      <pubDate>Fri, 09 Oct 2026 15:02:47 GMT</pubDate>
+      <source url="https://agenciabrasil.ebc.com.br">Agência Brasil</source>
+    </item>
+    <item>
+      <title>Postos de MG ainda não repassam a queda do diesel - G1</title>
+      <link>https://exemplo.test/nacional/repasse</link>
+      <pubDate>Sat, 10 Oct 2026 11:47:00 GMT</pubDate>
+      <source url="https://g1.globo.com">G1</source>
+    </item>
+    <item>
+      <title>Brent sobe com conflito e amplia pressão sobre o barril - Reuters</title>
+      <link>https://exemplo.test/exterior/brent</link>
+      <pubDate>Sun, 11 Oct 2026 09:00:00 GMT</pubDate>
+      <source url="https://www.reuters.com">Reuters</source>
+    </item>
+    <item>
+      <title>ANP divulga levantamento semanal de preços de combustíveis - ANP</title>
+      <link>https://exemplo.test/nacional/levantamento</link>
+      <pubDate>Sun, 11 Oct 2026 10:00:00 GMT</pubDate>
+      <source url="https://www.gov.br/anp">ANP</source>
+    </item>
+    <item>
+      <link>https://exemplo.test/sem-titulo</link>
+      <pubDate>Sun, 11 Oct 2026 10:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

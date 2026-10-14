@@ -1,0 +1,524 @@
+/* Estilo do site — sem framework, sem CDN, sem build: tem de abrir por file:// e funcionar offline. */
+
+/* ---------------------------------------------------------------- tokens */
+/* Valores em hex primeiro (reserva) e, quando o navegador souber, em OKLCH. */
+:root {
+	color-scheme: dark;
+	--cor-fundo: #101318;
+	--cor-fundo-alto: #171c24;
+	--cor-vidro: rgba(255, 255, 255, 0.055);
+	--cor-vidro-alto: rgba(255, 255, 255, 0.09);
+	/* Superfície opaca de popup: a lista do <select> é desenhada pelo sistema, não pelo
+	   nosso vidro, e o texto da opção herda --cor-texto. Sem fundo opaco aqui a opção
+	   fica branca no branco do sistema e só aparece no hover. */
+	--cor-superficie: #1a202b;
+	--cor-borda: rgba(255, 255, 255, 0.12);
+	--cor-borda-alta: rgba(255, 255, 255, 0.22);
+	--cor-texto: #f2f5f9;
+	--cor-suave: #b9c2d0;
+	--cor-fraco: #8f9aab;
+	--cor-acento: #6cb6ff;
+	--cor-acento-forte: #8fc9ff;
+	--cor-bom: #5ee0a0;
+	--cor-bom-fundo: rgba(94, 224, 160, 0.14);
+	--cor-ruim: #ff8f7a;
+	--cor-ruim-fundo: rgba(255, 143, 122, 0.14);
+	--cor-alerta: #ffcf70;
+	--cor-alerta-fundo: rgba(255, 207, 112, 0.14);
+	--cor-ouro: #ffd479;
+	--cor-prata: #d5dbe6;
+	--cor-bronze: #dda173;
+	--sombra: 0 18px 45px rgba(0, 0, 0, 0.45);
+	--sombra-baixa: 0 8px 22px rgba(0, 0, 0, 0.3);
+	--raio: 18px;
+	--raio-pequeno: 12px;
+	--tempo: 180ms;
+	--largura: 1180px;
+	/* Altura real da barra fixa (60 px medidos de 720 a 1600 px de largura). Precisa ser a
+	   altura real: o cabeçalho fixo da tabela encosta nesta medida, e a sobra virava uma
+	   fresta por onde as linhas da tabela apareciam por baixo da barra. */
+	--topo-altura: 3.75rem;
+}
+
+@supports (color: oklch(0.5 0.1 200)) {
+	:root {
+		--cor-fundo: oklch(0.155 0.012 265);
+		--cor-fundo-alto: oklch(0.205 0.02 265);
+		--cor-superficie: oklch(0.245 0.02 265);
+		--cor-texto: oklch(0.975 0.004 265);
+		--cor-suave: oklch(0.815 0.018 265);
+		--cor-fraco: oklch(0.7 0.02 265);
+		--cor-acento: oklch(0.78 0.13 240);
+		--cor-acento-forte: oklch(0.86 0.11 235);
+		--cor-bom: oklch(0.85 0.16 158);
+		--cor-ruim: oklch(0.78 0.15 35);
+		--cor-alerta: oklch(0.87 0.13 88);
+		--cor-ouro: oklch(0.88 0.13 90);
+		--cor-prata: oklch(0.89 0.012 265);
+		--cor-bronze: oklch(0.78 0.1 60);
+	}
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		color-scheme: light;
+		--cor-fundo: #eef1f6;
+		--cor-fundo-alto: #e3e8f0;
+		--cor-vidro: rgba(255, 255, 255, 0.9);
+		--cor-vidro-alto: rgba(255, 255, 255, 0.97);
+		--cor-superficie: #ffffff;
+		--cor-borda: rgba(16, 22, 34, 0.12);
+		--cor-borda-alta: rgba(16, 22, 34, 0.22);
+		--cor-texto: #12171f;
+		--cor-suave: #414b5c;
+		--cor-fraco: #5c6675;
+		--cor-acento: #1f5f9e;
+		--cor-acento-forte: #17497a;
+		--cor-bom: #10693f;
+		--cor-bom-fundo: rgba(16, 105, 63, 0.12);
+		--cor-ruim: #9d2a12;
+		--cor-ruim-fundo: rgba(157, 42, 18, 0.12);
+		--cor-alerta: #7a4d00;
+		--cor-alerta-fundo: rgba(122, 77, 0, 0.12);
+		--cor-ouro: #8a5b00;
+		--cor-prata: #5c6675;
+		--cor-bronze: #8a4f22;
+		--sombra: 0 18px 40px rgba(16, 22, 34, 0.14);
+		--sombra-baixa: 0 8px 20px rgba(16, 22, 34, 0.1);
+	}
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+	margin: 0;
+	min-height: 100vh;
+	background: var(--cor-fundo);
+	background:
+		radial-gradient(1100px 620px at 12% -10%, color-mix(in oklab, var(--cor-acento) 22%, transparent), transparent 70%),
+		radial-gradient(900px 520px at 92% 4%, color-mix(in oklab, var(--cor-bom) 14%, transparent), transparent 68%),
+		var(--cor-fundo);
+	color: var(--cor-texto);
+	font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+	line-height: 1.55;
+	-webkit-font-smoothing: antialiased;
+}
+
+.sprite { position: absolute; height: 0; width: 0; overflow: hidden; }
+/* Escondido de quem vê e disponível para o leitor de tela. Precisa valer também para
+   <caption>: engines resolvem "table-caption" de forma própria (largura e altura podem ser
+   ignoradas), e com isso o texto da legenda vazava por cima da tabela. O recorte por
+   clip + clip-path e o text-indent negativo fecham as três vias. */
+.oculto {
+	position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+	overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%);
+	white-space: nowrap; text-indent: -999em;
+}
+/* painel escondido continua escondido mesmo quando a regra de layout é mais específica */
+[hidden] { display: none !important; }
+
+.pular {
+	position: absolute; left: 1rem; top: -3rem; z-index: 20;
+	padding: 0.6rem 1rem; border-radius: var(--raio-pequeno);
+	background: var(--cor-vidro-alto); color: var(--cor-texto);
+	transition: top var(--tempo) ease;
+}
+.pular:focus { top: 1rem; }
+
+a { color: var(--cor-acento-forte); text-decoration-color: color-mix(in oklab, var(--cor-acento-forte) 45%, transparent); text-underline-offset: 3px; }
+a:hover { text-decoration-color: currentColor; }
+
+:focus-visible { outline: 2px solid var(--cor-acento); outline-offset: 2px; border-radius: 6px; }
+/* o alvo focado não pode ficar escondido atrás do topo fixo (WCAG 2.4.11) */
+a, button, select, input, [tabindex] { scroll-margin-top: calc(var(--topo-altura) + 0.75rem); }
+
+/* ---------------------------------------------------------------- topo */
+/* Barra fixa com fundo opaco: com o vidro translúcido o texto da página passava por baixo
+   dela e virava um borrão ilegível (o "emaranhado" de título com o conteúdo rolando). */
+.topo {
+	position: sticky; top: 0; z-index: 10;
+	background: var(--cor-fundo);
+	border-bottom: 1px solid var(--cor-borda);
+}
+.topo__interno {
+	max-width: var(--largura); margin: 0 auto; padding: 0.85rem 1.25rem;
+	display: flex; flex-wrap: wrap; gap: 0.35rem 1.5rem; align-items: baseline; justify-content: space-between;
+}
+.marca { display: flex; align-items: center; gap: 0.55rem; margin: 0; font-size: 1.15rem; letter-spacing: -0.01em; }
+.marca strong { color: var(--cor-bom); }
+.topo__meta { margin: 0; font-size: 0.82rem; color: var(--cor-suave); }
+.topo__meta a { color: inherit; }
+
+/* ---------------------------------------------------------------- página */
+.pagina {
+	max-width: var(--largura); margin: 0 auto;
+	padding: 1.5rem 1.25rem 3rem;
+	display: grid; gap: 2rem;
+}
+/* Itens de grade com min-width auto não encolhem até o conteúdo mínimo: sem isto a
+   tabela (células nowrap) empurra a página e cria rolagem horizontal em tela estreita. */
+.pagina > * { min-width: 0; }
+.titulo-secao {
+	display: flex; align-items: center; gap: 0.5rem;
+	margin: 0 0 0.35rem; font-size: 1.06rem; letter-spacing: 0.01em;
+}
+.titulo-secao .icone { color: var(--cor-acento); }
+.legenda { margin: 0 0 0.9rem; font-size: 0.86rem; color: var(--cor-suave); max-width: 78ch; }
+
+/* ---------------------------------------------------------------- vidro */
+.vidro {
+	background: var(--cor-vidro);
+	border: 1px solid var(--cor-borda);
+	border-radius: var(--raio);
+	box-shadow: var(--sombra-baixa);
+	backdrop-filter: blur(16px) saturate(125%);
+	padding: 1.15rem 1.25rem;
+}
+.painel { display: grid; gap: 0.75rem; }
+
+/* ---------------------------------------------------------------- filtros */
+.campos { display: grid; gap: 0.9rem; grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr)); align-items: end; }
+.campo { display: grid; gap: 0.3rem; }
+.campo--acao { justify-items: start; }
+.campo label { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--cor-suave); }
+
+select, .botao {
+	min-height: 44px; padding: 0.55rem 0.75rem;
+	font: inherit; color: var(--cor-texto);
+	background: var(--cor-vidro-alto);
+	border: 1px solid var(--cor-borda);
+	border-radius: var(--raio-pequeno);
+	transition: border-color var(--tempo) ease, background var(--tempo) ease, transform var(--tempo) ease;
+}
+/* O <select> e a lista de opções são pintados pelo sistema com fundo claro: sem cor e
+   fundo próprios, a opção fica branca no branco e só o item sob o cursor aparece. */
+select { cursor: pointer; background: var(--cor-superficie); }
+select option, select optgroup { background-color: var(--cor-superficie); color: var(--cor-texto); }
+.botao { display: inline-flex; align-items: center; gap: 0.45rem; cursor: pointer; }
+/* Ação principal do recorte: aplicar a pesquisa. Fica mais visível que o botão de limpar. */
+.botao--forte {
+	background: color-mix(in oklab, var(--cor-acento) 24%, var(--cor-superficie));
+	border-color: var(--cor-borda-alta);
+	font-weight: 620;
+}
+.botao:hover, select:hover { border-color: var(--cor-borda-alta); }
+.botao:active { transform: translateY(1px); }
+.anuncio { margin: 0; min-height: 1.2rem; font-size: 0.84rem; color: var(--cor-suave); }
+
+/* ---------------------------------------------------------------- ícones */
+.icone { width: 1.15em; height: 1.15em; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.icone--forte { width: 1.5rem; height: 1.5rem; color: var(--cor-bom); }
+
+/* ---------------------------------------------------------------- kpis */
+.kpis { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr)); }
+.kpi { display: grid; gap: 0.3rem; align-content: start; padding: 1rem 1.1rem; }
+.kpi__rotulo { display: flex; align-items: center; gap: 0.4rem; margin: 0; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--cor-suave); }
+.kpi__valor { margin: 0; font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem); font-weight: 650; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.kpi__nota { margin: 0; font-size: 0.82rem; color: var(--cor-suave); }
+.kpi--bom .kpi__valor { color: var(--cor-bom); }
+.kpi--ruim .kpi__valor { color: var(--cor-ruim); }
+.kpi--acento .kpi__valor { color: var(--cor-acento-forte); }
+
+/* ---------------------------------------------------------------- destaques */
+.destaques { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); }
+.destaque { display: grid; gap: 0.5rem; }
+.destaque__lista { display: grid; gap: 0.7rem; }
+.destaque__rotulo { display: flex; align-items: center; gap: 0.45rem; margin: 0; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+.destaque--barato .destaque__rotulo { color: var(--cor-bom); }
+.destaque--caro .destaque__rotulo { color: var(--cor-ruim); }
+
+.lugar {
+	display: grid; grid-template-columns: auto 1fr auto; gap: 0.15rem 0.85rem; align-items: center;
+	padding: 0.7rem 0.85rem; border-radius: var(--raio-pequeno);
+	background: var(--cor-vidro-alto); border: 1px solid var(--cor-borda);
+}
+.lugar__medalha {
+	grid-row: span 3; display: grid; place-items: center; gap: 0.1rem;
+	width: 2.75rem; height: 2.75rem; border-radius: 50%;
+	background: radial-gradient(circle at 30% 25%, var(--cor-vidro-alto), transparent 75%);
+	border: 1px solid var(--cor-borda-alta);
+	font-size: 0.72rem; font-weight: 700;
+}
+.lugar:nth-child(1) .lugar__medalha { color: var(--cor-ouro); }
+.lugar:nth-child(2) .lugar__medalha { color: var(--cor-prata); }
+.lugar:nth-child(3) .lugar__medalha { color: var(--cor-bronze); }
+.lugar__uf { margin: 0; font-size: 1.15rem; font-weight: 700; letter-spacing: 0.02em; }
+.lugar__preco { margin: 0; font-size: 1.05rem; font-weight: 620; font-variant-numeric: tabular-nums; }
+.lugar__nota { margin: 0; font-size: 0.78rem; color: var(--cor-suave); }
+.lugar__delta { justify-self: end; grid-row: span 3; }
+
+/* ---------------------------------------------------------------- selos e chips */
+.selo, .chip {
+	display: inline-flex; align-items: center; gap: 0.3rem;
+	min-height: 28px; padding: 0.16rem 0.55rem; border-radius: 999px;
+	font-size: 0.74rem; font-weight: 600; white-space: nowrap;
+	border: 1px solid transparent;
+}
+.selo--bom { color: var(--cor-bom); background: var(--cor-bom-fundo); border-color: color-mix(in oklab, var(--cor-bom) 35%, transparent); }
+.selo--ruim { color: var(--cor-ruim); background: var(--cor-ruim-fundo); border-color: color-mix(in oklab, var(--cor-ruim) 35%, transparent); }
+.selo--neutro { color: var(--cor-suave); background: var(--cor-vidro-alto); border-color: var(--cor-borda); }
+.chip { color: var(--cor-suave); background: var(--cor-vidro-alto); border-color: var(--cor-borda); }
+button.chip { cursor: pointer; font-family: inherit; }
+button.chip:hover { color: var(--cor-texto); border-color: var(--cor-borda-alta); }
+
+.delta { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.82rem; font-weight: 620; font-variant-numeric: tabular-nums; }
+.delta--bom { color: var(--cor-bom); }
+.delta--ruim { color: var(--cor-ruim); }
+.delta--neutro { color: var(--cor-suave); }
+
+/* ---------------------------------------------------------------- ranking */
+.ranking { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; }
+.rank__botao {
+	display: grid; width: 100%; min-height: 44px; align-items: center;
+	grid-template-columns: 1.6rem 3.2rem minmax(4rem, 1fr) 5.5rem 5rem 6.5rem;
+	gap: 0.6rem;
+	padding: 0.4rem 0.6rem; text-align: left;
+	font: inherit; color: inherit; cursor: pointer;
+	background: transparent; border: 1px solid transparent; border-radius: var(--raio-pequeno);
+	transition: background var(--tempo) ease, border-color var(--tempo) ease;
+}
+.rank__botao:hover { background: var(--cor-vidro-alto); border-color: var(--cor-borda); }
+.rank__botao[aria-pressed="true"] { background: var(--cor-vidro-alto); border-color: var(--cor-acento); }
+/* No ranking por cidade não existe recorte mais fundo para clicar: a linha é só leitura. */
+.rank__botao--leitura { cursor: default; }
+.rank__botao--leitura:hover { background: transparent; border-color: transparent; }
+.rank__posicao { font-size: 0.78rem; color: var(--cor-fraco); font-variant-numeric: tabular-nums; text-align: right; }
+.rank__uf { font-weight: 680; letter-spacing: 0.02em; }
+.rank__barra { position: relative; height: 0.6rem; border-radius: 999px; background: var(--cor-vidro-alto); overflow: hidden; }
+.rank__preenchimento { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: 999px; background: linear-gradient(90deg, color-mix(in oklab, var(--cor-acento) 75%, transparent), color-mix(in oklab, var(--cor-acento) 30%, transparent)); transition: width 420ms cubic-bezier(.2,.7,.2,1); }
+.rank__preenchimento--bom { background: linear-gradient(90deg, color-mix(in oklab, var(--cor-bom) 80%, transparent), color-mix(in oklab, var(--cor-bom) 28%, transparent)); }
+.rank__preenchimento--ruim { background: linear-gradient(90deg, color-mix(in oklab, var(--cor-ruim) 80%, transparent), color-mix(in oklab, var(--cor-ruim) 28%, transparent)); }
+.rank__preco { font-weight: 620; font-variant-numeric: tabular-nums; text-align: right; }
+.rank__postos { font-size: 0.78rem; color: var(--cor-suave); font-variant-numeric: tabular-nums; text-align: right; }
+
+/* ---------------------------------------------------------------- tabela */
+.tabela-rolagem { overflow-x: auto; margin: -0.35rem; padding: 0.35rem; max-width: 100%; }
+.tabela { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+.tabela th, .tabela td { padding: 0.55rem 0.7rem; text-align: left; border-bottom: 1px solid var(--cor-borda); white-space: nowrap; }
+/* Cabeçalho de tabela sem "sticky": dentro do invólucro com overflow (necessário para a
+   rolagem horizontal) o cabeçalho fixo é resolvido de formas diferentes por cada engine e
+   acabava pintado por cima das primeiras linhas. Fica na posição natural. */
+.tabela thead th { background: var(--cor-fundo); }
+.tabela th button {
+	display: inline-flex; align-items: center; gap: 0.35rem;
+	min-height: 44px; padding: 0 0.2rem; font: inherit; font-weight: 620;
+	color: inherit; background: none; border: 0; cursor: pointer;
+}
+.tabela th button::after { content: ""; width: 0.55rem; height: 0.55rem; border-left: 2px solid var(--cor-fraco); border-bottom: 2px solid var(--cor-fraco); transform: rotate(-45deg); opacity: 0; transition: opacity var(--tempo) ease; }
+.tabela th[aria-sort="ascending"] button::after { opacity: 1; transform: rotate(135deg); }
+.tabela th[aria-sort="descending"] button::after { opacity: 1; transform: rotate(-45deg); }
+.tabela th.numero button, .tabela td.numero { text-align: right; justify-content: flex-end; font-variant-numeric: tabular-nums; }
+/* Escala do recorte: verde para as médias mais baixas, vermelho para as mais altas.
+   A classe é a reserva (navegador sem color-mix); o @supports dá o degradê suave. */
+.tabela tbody tr.linha--bom { background: var(--cor-bom-fundo); }
+.tabela tbody tr.linha--ruim { background: var(--cor-ruim-fundo); }
+
+@supports (background: color-mix(in oklab, red 10%, transparent)) {
+	.tabela tbody tr.linha--bom,
+	.tabela tbody tr.linha--ruim {
+		background: color-mix(in oklab, var(--cor-linha, transparent) calc(var(--forca, 0) * 22%), transparent);
+	}
+}
+
+.tabela tbody tr.estado-atual { box-shadow: inset 3px 0 0 var(--cor-bom); }
+.tabela tbody tr:hover { background: var(--cor-vidro-alto); }
+.tabela tbody tr.estado-atual { background: var(--cor-bom-fundo); }
+
+/* ---------------------------------------------------------------- notícias */
+.noticias__grupos { display: grid; gap: 1.25rem; }
+.noticias__grupo { display: grid; gap: 0.7rem; }
+.noticias__grupo-titulo { display: flex; align-items: center; gap: 0.45rem; margin: 0; font-size: 0.95rem; }
+.noticias__grupo--bom .noticias__grupo-titulo { color: var(--cor-bom); }
+.noticias__grupo--ruim .noticias__grupo-titulo { color: var(--cor-ruim); }
+.noticias__lista { display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr)); }
+
+.noticia {
+	display: grid; gap: 0.45rem; align-content: start;
+	padding: 0.9rem 1rem; border-radius: var(--raio);
+	background: var(--cor-vidro); border: 1px solid var(--cor-borda);
+	box-shadow: var(--sombra-baixa);
+	border-left: 3px solid var(--cor-borda-alta);
+}
+.noticia--beneficio { border-left-color: var(--cor-bom); }
+.noticia--prejuizo { border-left-color: var(--cor-ruim); }
+.noticia__titulo { margin: 0; font-size: 1rem; line-height: 1.4; font-weight: 600; }
+.noticia__titulo a { color: var(--cor-texto); text-decoration: none; }
+.noticia__titulo a:hover { color: var(--cor-acento-forte); text-decoration: underline; }
+.noticia__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin: 0; font-size: 0.78rem; color: var(--cor-suave); }
+.noticia__estados { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.noticia__peso { margin: 0; font-size: 0.78rem; color: var(--cor-fraco); }
+.noticia .icone { width: 1em; height: 1em; }
+
+/* ---------------------------------------------------------------- estados de tela */
+.esqueleto { border-radius: var(--raio-pequeno); background: linear-gradient(100deg, var(--cor-vidro) 30%, var(--cor-vidro-alto) 50%, var(--cor-vidro) 70%); background-size: 300% 100%; animation: brilho 1.4s ease-in-out infinite; min-height: 4.5rem; }
+@keyframes brilho { from { background-position: 120% 0; } to { background-position: -20% 0; } }
+
+.aviso {
+	display: grid; gap: 0.4rem;
+	padding: 1rem 1.15rem; border-radius: var(--raio);
+	background: var(--cor-alerta-fundo); border: 1px solid color-mix(in oklab, var(--cor-alerta) 40%, transparent);
+	color: var(--cor-texto);
+}
+.aviso__titulo { display: flex; align-items: center; gap: 0.45rem; margin: 0; font-weight: 640; color: var(--cor-alerta); }
+.aviso p { margin: 0; font-size: 0.88rem; color: var(--cor-suave); }
+.vazio { margin: 0; padding: 0.9rem 0; color: var(--cor-suave); font-size: 0.9rem; }
+
+/* ---------------------------------------------------------------- rodapé */
+.rodape { border-top: 1px solid var(--cor-borda); background: color-mix(in oklab, var(--cor-fundo-alto) 70%, transparent); }
+.rodape p { max-width: var(--largura); margin: 0 auto; padding: 1.1rem 1.25rem 0; font-size: 0.84rem; color: var(--cor-suave); }
+.rodape__creditos { padding-bottom: 2rem; font-size: 0.78rem; }
+.rodape code { color: var(--cor-texto); }
+
+/* ---------------------------------------------------------------- responsivo */
+@media (max-width: 900px) {
+	.rank__botao {
+		grid-template-columns: 1.4rem 2.6rem minmax(3rem, 1fr) 4.8rem auto;
+		grid-template-areas:
+			"pos uf barra preco delta"
+			".   .  postos postos postos";
+	}
+	.rank__posicao { grid-area: pos; }
+	.rank__uf { grid-area: uf; }
+	.rank__barra { grid-area: barra; }
+	.rank__preco { grid-area: preco; }
+	.rank__delta { grid-area: delta; }
+	.rank__postos { grid-area: postos; text-align: left; }
+}
+
+@media (max-width: 640px) {
+	:root { --raio: 15px; }
+	.pagina { padding: 1.1rem 0.9rem 2.5rem; gap: 1.5rem; }
+	.vidro, .noticia { backdrop-filter: none; background: var(--cor-vidro-alto); }
+	.topo__meta { display: none; }
+	.titulo-secao { font-size: 1rem; }
+}
+
+@media (max-width: 420px) {
+	/* Em tela muito estreita a linha do ranking precisa de duas colunas a menos */
+	.rank__botao {
+		grid-template-columns: 1.2rem 2.4rem minmax(2.5rem, 1fr) auto;
+		grid-template-areas:
+			"pos uf barra preco"
+			".   .  postos delta";
+	}
+	.rank__postos { text-align: left; }
+	.rank__delta { justify-self: end; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html { scroll-behavior: auto; }
+	*, *::before, *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
+	.rank__preenchimento { transition: none; }
+}
+
+@media (prefers-contrast: more) {
+	.vidro, .noticia { background: var(--cor-fundo-alto); border-color: var(--cor-borda-alta); }
+	.legenda, .kpi__nota, .lugar__nota, .noticia__meta { color: var(--cor-texto); }
+}
+
+/* ---------------------------------------------------------------- abas */
+.abas {
+	display: flex; flex-wrap: wrap; gap: 0.4rem;
+	justify-self: start; padding: 0.35rem;
+	border-radius: 999px;
+	background: var(--cor-vidro); border: 1px solid var(--cor-borda);
+}
+.aba {
+	display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem;
+	min-height: 44px; padding: 0.5rem 1.1rem;
+	font: inherit; font-weight: 620; color: var(--cor-suave);
+	background: transparent; border: 1px solid transparent; border-radius: 999px;
+	cursor: pointer;
+	transition: color var(--tempo) ease, background var(--tempo) ease, border-color var(--tempo) ease;
+}
+.aba:hover { color: var(--cor-texto); border-color: var(--cor-borda-alta); }
+.aba[aria-selected="true"] { color: var(--cor-texto); background: var(--cor-vidro-alto); border-color: var(--cor-acento); }
+.aba[aria-selected="true"] .icone { color: var(--cor-acento); }
+.aba__painel { display: grid; gap: 2rem; min-width: 0; }
+.aba__painel > * { min-width: 0; }
+.inteligencia { display: grid; gap: 2rem; }
+.inteligencia > * { min-width: 0; }
+
+/* ---------------------------------------------------------------- aba inteligência */
+.faixa { display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); }
+.faixa__item {
+	display: grid; gap: 0.15rem; align-content: start;
+	padding: 0.8rem 0.9rem; border-radius: var(--raio-pequeno);
+	background: var(--cor-vidro-alto); border: 1px solid var(--cor-borda);
+}
+.faixa__rotulo { margin: 0; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--cor-suave); }
+.faixa__valor { margin: 0; font-size: 1.2rem; font-weight: 650; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.faixa__nota { margin: 0; font-size: 0.78rem; color: var(--cor-suave); }
+.faixa__item--acento { border-color: color-mix(in oklab, var(--cor-acento) 45%, transparent); }
+.faixa__item--acento .faixa__valor { color: var(--cor-acento-forte); }
+
+.efeito-bloco { display: grid; gap: 0.85rem; }
+.efeito { display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13.5rem), 1fr)); }
+.efeito__item {
+	display: grid; gap: 0.15rem; align-content: start;
+	padding: 0.85rem 0.95rem; border-radius: var(--raio-pequeno);
+	background: var(--cor-vidro-alto); border: 1px solid var(--cor-borda);
+}
+.efeito__rotulo { margin: 0; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--cor-suave); }
+.efeito__valor { margin: 0; font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.65rem); font-weight: 650; font-variant-numeric: tabular-nums; }
+.efeito__nota { margin: 0; font-size: 0.78rem; color: var(--cor-suave); }
+.efeito__item--destaque { border-color: color-mix(in oklab, var(--cor-acento) 45%, transparent); }
+.efeito__item--destaque .efeito__valor { color: var(--cor-acento-forte); }
+.efeito__leitura { margin: 0; font-size: 0.98rem; }
+.ressalva {
+	display: block; margin: 0; padding: 0.8rem 0.95rem;
+	border-radius: var(--raio-pequeno); border-left: 3px solid var(--cor-alerta);
+	background: var(--cor-vidro-alto);
+	font-size: 0.86rem; color: var(--cor-suave);
+}
+.ressalva strong { color: var(--cor-texto); }
+.exemplos { border: 1px solid var(--cor-borda); border-radius: var(--raio-pequeno); background: var(--cor-vidro); padding: 0.35rem 0.75rem 0.6rem; }
+.exemplos summary { display: flex; align-items: center; min-height: 44px; cursor: pointer; font-size: 0.86rem; font-weight: 620; }
+.exemplos summary:hover { color: var(--cor-acento-forte); }
+
+.tabela td.texto, .tabela th.texto { white-space: normal; min-width: 14rem; }
+.tabela td.texto--longo { min-width: 20rem; }
+.tabela tbody th[scope="row"] { text-align: left; font-weight: 600; }
+.tabela tbody tr.linha--evidencia { box-shadow: inset 3px 0 0 var(--cor-bom); }
+.selo--alerta { color: var(--cor-alerta); background: var(--cor-alerta-fundo); border-color: color-mix(in oklab, var(--cor-alerta) 35%, transparent); }
+.selo--miudo { min-height: 22px; margin-left: 0.4rem; font-size: 0.68rem; }
+.uf-forte { font-weight: 680; letter-spacing: 0.02em; margin-right: 0.4rem; }
+.mono { font-variant-numeric: tabular-nums; }
+/* Escala de cor do IPF: as classes são a reserva (navegador sem color-mix); o @supports dá o degradê. */
+.celula--bom { background: var(--cor-bom-fundo); }
+.celula--alerta { background: var(--cor-alerta-fundo); }
+@supports (background: color-mix(in oklab, red 10%, transparent)) {
+	.celula--bom, .celula--alerta {
+		background: color-mix(in oklab, var(--cor-linha, transparent) calc(var(--forca, 0) * 34%), transparent);
+	}
+}
+
+.alvos { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); }
+.alvo { display: grid; gap: 0.6rem; align-content: start; }
+.alvo__topo { display: flex; flex-wrap: wrap; gap: 0.3rem 0.75rem; align-items: baseline; justify-content: space-between; }
+.alvo__lugar { margin: 0; font-size: 1rem; }
+.alvo__lugar span { color: var(--cor-suave); font-weight: 500; }
+.alvo__score { margin: 0; font-size: 1.2rem; font-weight: 680; color: var(--cor-acento-forte); font-variant-numeric: tabular-nums; }
+.alvo__meta, .alvo__rodape { margin: 0; font-size: 0.8rem; color: var(--cor-suave); }
+.alvo__componentes { display: grid; gap: 0.5rem; }
+.medidor { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.15rem 0.6rem; align-items: center; }
+.medidor__rotulo { margin: 0; font-size: 0.76rem; color: var(--cor-suave); }
+.medidor__valor { margin: 0; grid-row: span 2; font-size: 0.82rem; font-weight: 620; text-align: right; font-variant-numeric: tabular-nums; }
+.medidor__trilho { display: block; height: 0.5rem; border-radius: 999px; background: var(--cor-vidro-alto); border: 1px solid var(--cor-borda); overflow: hidden; }
+.medidor__barra { display: block; height: 100%; border-radius: 999px; background: var(--cor-acento); }
+
+.limites { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
+.limites li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.55rem; align-items: start; font-size: 0.88rem; color: var(--cor-suave); }
+.limites .icone { color: var(--cor-alerta); margin-top: 0.2rem; }
+
+@media (max-width: 640px) {
+	.aba__painel, .inteligencia { gap: 1.5rem; }
+	.abas { width: 100%; justify-self: stretch; }
+	.aba { flex: 1 1 auto; padding: 0.5rem 0.8rem; }
+}
+
+@media (max-width: 420px) {
+	.aba { padding: 0.5rem 0.6rem; font-size: 0.94rem; }
+}

@@ -1,0 +1,45 @@
+# ---- Ambiente e segredos ----
+# .env NUNCA vai para o git: guarda chaves, senhas e caminhos locais.
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+*.pem
+*.key
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
+.coverage
+htmlcov/
+
+# ---- Dados ----
+# data/raw/ é a prova original (como veio da fonte) e não entra no git.
+# data/processed/ e site/data/ são versionados: são o resultado publicado pelo site.
+data/raw/*
+!data/raw/.gitkeep
+
+# ---- Saídas e logs ----
+saidas/
+logs/
+*.log
+
+# ---- Bastidor (não é parte do projeto publicado) ----
+# Anotações de trabalho, rascunhos e material de apoio ficam aqui, fora do repositório.
+_interno/
+
+# ---- Artefatos de build/distribuição ----
+dist/
+build/
+*.zip
+
+# ---- IDE / SO ----
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

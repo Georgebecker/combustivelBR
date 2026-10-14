@@ -1,0 +1,7 @@
+# Configuração do projeto. Não há etapa de build: o pacote vive em src/ e os scripts
+# (preparar.ps1, pipeline.ps1, servir.ps1) põem src/ no PYTHONPATH.
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q"
